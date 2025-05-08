@@ -1,0 +1,52 @@
+[
+  {
+    "id": "e1",
+    "firstName": "Bob",
+    "lastName": "Johnson",
+    "email": "bob.johnson@example.com",
+    "timezone": "America/Vancouver",
+    "color": "#3B82F6",
+    "availability": [
+      {
+        "id": "e1‑avail‑1",
+        "start": "2025-05-09T09:00:00-07:00",
+        "end":   "2025-05-09T17:00:00-07:00"
+      }
+    ]
+  },
+  {
+    "id": "e2",
+    "firstName": "Carol",
+    "lastName": "Nguyen",
+    "email": "carol.nguyen@example.com",
+    "timezone": "America/Vancouver",
+    "color": "#10B981",
+    "availability": [
+      {
+        "id": "e2‑avail‑1",
+        "start": "2025-05-09T09:00:00-07:00",
+        "end":   "2025-05-09T17:00:00-07:00"
+      }
+    ]
+  },
+  {
+    "id": "e3",
+    "firstName": "Hailey",
+    "lastName": "Hong",
+    "email": "hailey.hong@example.com",
+    "timezone": "America/Vancouver",
+    "color": "#FBBF24",
+    "availability": [
+      {
+        "id": "e3‑avail‑1",
+        "start": "2025-05-09T09:00:00-07:00",
+        "end":   "2025-05-09T17:00:00-07:00"
+      },
+      {
+        "id": "e3‑avail‑2",
+        "start": "2025-05-08T09:00:00-07:00",
+        "end":   "2025-05-08T17:00:00-07:00"
+      }
+    ]
+  }
+]

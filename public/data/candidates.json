@@ -1,0 +1,28 @@
+[
+  {
+    "id": "c1",
+    "firstName": "Alice",
+    "lastName": "Smith",
+    "email": "alice.smith@example.com",
+    "availability": [
+      {
+        "id": "c1‑avail‑1",
+        "start": "2025-05-09T14:00:00-07:00",
+        "end":   "2025-05-09T17:00:00-07:00"
+      }
+    ]
+  },
+  {
+    "id": "c2",
+    "firstName": "David",
+    "lastName": "Lee",
+    "email": "david.lee@example.com",
+    "availability": [
+      {
+        "id": "c2‑avail‑1",
+        "start": "2025-05-08T10:00:00-07:00",
+        "end":   "2025-05-08T16:00:00-07:00"
+      }
+    ]
+  }
+]
