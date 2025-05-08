@@ -45,7 +45,6 @@
     ]
   },
   "devDependencies": {
-    "@testing-library/react-hooks": "^8.0.1",
     "@types/react-big-calendar": "^1.16.1",
     "autoprefixer": "^10.4.21",
     "postcss": "^8.5.3",
