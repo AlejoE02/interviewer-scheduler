@@ -1,10 +1,4 @@
-import { Slot, Candidate, Engineer } from '../models/types';
-
-export async function getSlots(): Promise<Slot[]> {
-  const res = await fetch('/data/slots.json');
-  if (!res.ok) throw new Error('Failed to load slots');
-  return res.json();
-}
+import { Candidate, Engineer } from '../models/types';
 
 export async function bookSlot(slotId: string, candidateId: string, engineerId: string) {
   return new Promise((resolve, reject) => setTimeout(resolve, 500));

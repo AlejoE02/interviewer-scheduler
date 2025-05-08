@@ -1,17 +1,34 @@
-import React, { useState} from 'react'
+import React, { useEffect, useState } from 'react'
 import type { CalendarSlot, Candidate, Engineer } from '../models/types'
 
 type BookingModalProps = {
   slot: CalendarSlot
   candidates: Candidate[]
   engineers: Engineer[]
+  initialCandidateId?: string
+  initialEngineerId?: string
   onClose: () => void
   onConfirm: (slot: CalendarSlot, candidateId: string, engineerId: string) => void
 }
 
-export function BookingModal({ slot, candidates, engineers, onClose, onConfirm }: BookingModalProps) {
-  const [candidateId, setCandidateId] = useState<string>(candidates[0]?.id ?? '')
-  const [engineerId, setEngineerId]   = useState<string>(engineers[0]?.id   ?? '')
+export function BookingModal({
+  slot,
+  candidates,
+  engineers,
+  initialCandidateId,
+  initialEngineerId,
+  onClose,
+  onConfirm
+}: BookingModalProps) {
+  const [candidateId, setCandidateId] = useState<string>(initialCandidateId || candidates[0]?.id || '')
+  const [engineerId, setEngineerId] = useState<string>(initialEngineerId || engineers[0]?.id || '')
+  useEffect(() => {
+    if (initialCandidateId) setCandidateId(initialCandidateId)
+  }, [initialCandidateId])
+  useEffect(() => {
+    if (initialEngineerId) setEngineerId(initialEngineerId)
+  }, [initialEngineerId])
+
   return (
     <div className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center">
       <div className="bg-white rounded-lg p-6 w-96">

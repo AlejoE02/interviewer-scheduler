@@ -2,10 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Calendar } from './components/Calendar';
 import { BookingModal } from './components/BookingModal';
 import * as Types from './models/types';
-import { getSlots, getCandidates, getEngineers, bookSlot } from './services/api';
-import { toCalendarSlot } from './utils';
+import { getCandidates, getEngineers, bookSlot } from './services/api';
+//import { toCalendarSlot } from './utils';
 import { Filters, FilterType } from './components/Filters';
-import { log } from 'console';
 
 function App() {
   const [slots, setSlots] = useState<Types.CalendarSlot[]>([]);
@@ -16,15 +15,38 @@ function App() {
   const [filterType, setFilterType] = useState<FilterType>('none');
   const [filterId, setFilterId] = useState<string>('');
   const [duration, setDuration] = useState<number>(15);
+  const [modalCandidateId, setModalCandidateId] = useState<string>('');
+  const [modalEngineerId, setModalEngineerId] = useState<string>('');
 
   useEffect(() => {
-    Promise.all([getSlots(), getCandidates(), getEngineers()])
-      .then(([slotsData, candidates, engineers]: [Types.Slot[], Types.Candidate[], Types.Engineer[]]) => {
-        console.log('raw slots', slotsData);
-        setSlots(slotsData.map(toCalendarSlot))
-        console.log('mapped CalendarSlots', slotsData.map(toCalendarSlot))
+    Promise.all([getCandidates(), getEngineers()])
+      .then(([candidates, engineers]: [Types.Candidate[], Types.Engineer[]]) => {
+        //console.log('raw slots', slotsData);
+        //console.log('mapped CalendarSlots', slotsData.map(toCalendarSlot))
         setEngineers(engineers)
         setCandidates(candidates)
+        const allSlots: Types.CalendarSlot[] = engineers.flatMap((engineer) => {
+          return engineer.availability.flatMap((window) => {
+            const startMs = new Date(window.start).getTime();
+            const endMs = new Date(window.end).getTime();
+            const slots: Types.CalendarSlot[] = [];
+            for (let time = startMs;
+              time + 15 * 60 * 1000 <= endMs;
+              time += 15 * 60 * 1000) {
+              slots.push({
+                id: `${engineer.id}-${time}`,
+                start: new Date(time),
+                end: new Date(time + 15 * 60 * 1000),
+                title: `${engineer.firstName} ${engineer.lastName} - Free`,
+                engineerId: engineer.id,
+                color: engineer.color,
+                status: 'available'
+              })
+            }
+            return slots;
+          })
+        })
+        setSlots(allSlots)
       })
       .catch(console.error)
       .finally(() => setLoading(false));
@@ -37,7 +59,13 @@ function App() {
   ): Promise<void> => {
     setSlots(prev =>
       prev.map(s =>
-        s.id === slot.id ? { ...s, title: 'Booked' } : s
+        s.id === slot.id ? {
+          ...s,
+          status: 'booked',
+          candidateId,
+          title: 'Booked',
+          color: '#6B7280'
+        } : s
       )
     )
     setSelectedSlot(null);
@@ -75,11 +103,11 @@ function App() {
  * - If no candidate or engineer matches the `filterId`, the slot is excluded.
  */
   const filteredByPerson = slots.filter((s) => {
-    if(filterType === 'none' || !filterId) 
+    if (filterType === 'none' || !filterId)
       return true
     if (filterType === 'candidate') {
       const cand = candidates.find((c) => c.id === filterId)
-      console.log('filteredByPerson cand', cand);      
+      //console.log('filteredByPerson cand', cand);
       if (!cand) return false
       return cand.availability.some((a) => {
         const start = new Date(a.start)
@@ -99,9 +127,7 @@ function App() {
     return true
   })
 
-  console.log('filteredByPerson before filteredSlots', filteredByPerson);
   
-
   /**
  * Filters the available slots to match the required duration.
  * 
@@ -126,15 +152,14 @@ function App() {
  * - Only slots with the title `'Free'` are considered for grouping.
  */
   const filteredSlots: Types.CalendarSlot[] = (() => {
-    if (duration === 15) 
+    if (duration === 15)
       return filteredByPerson
     const blockSize = duration / 15
     const slotMap = new Map<number, Types.CalendarSlot>()
-    console.log('slotMap', slotMap);
-    
+
 
     filteredByPerson.forEach((s) => {
-      if (s.title === 'Free')
+      if (s.status === 'available')
         slotMap.set(s.start.getTime(), s)
     })
 
@@ -154,8 +179,6 @@ function App() {
   })()
 
 
-  console.log('filtered slots', filteredSlots);
-
   return (
     <div className='h-full relative'>
       <Filters
@@ -168,12 +191,18 @@ function App() {
         onFilterIdChange={setFilterId}
         onDurationChange={setDuration}
       />
-      <Calendar slots={filteredSlots} onSelectSlot={setSelectedSlot} />
+      <Calendar slots={filteredSlots} onSelectSlot={(slot) => {
+        setModalEngineerId(slot.engineerId)
+        setModalCandidateId(filterType === 'candidate' ? filterId : '')
+        setSelectedSlot(slot)
+      }} />
       {selectedSlot && (
         <BookingModal
           slot={selectedSlot}
           candidates={candidates}
           engineers={engineers}
+          initialCandidateId={modalCandidateId}
+          initialEngineerId={modalEngineerId}
           onClose={() => setSelectedSlot(null)}
           onConfirm={handleConfirm}
         />

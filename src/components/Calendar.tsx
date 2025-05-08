@@ -1,3 +1,4 @@
+import { CSSProperties, useState } from 'react'
 import { Calendar as RbcCalendar, dateFnsLocalizer, Event } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
 import { enUS } from 'date-fns/locale/en-US'
@@ -14,13 +15,29 @@ type CalendarProps = {
 
 export function Calendar({ slots, onSelectSlot }: CalendarProps) {
   //console.log('Calendar received slots', slots);
-  
+  const [currentDate, setCurrentDate] = useState<Date>(new Date())
+
   const events: MyEvent[] = slots.map(s => ({
     id: s.id,
     start: s.start,
     end: s.end,
     title: s.title || 'Available',
+    resource: s
   }))
+
+  const eventStyleGetter = (event: any) => {
+    const slot: CalendarSlot = event.resource
+    const style: CSSProperties ={
+      backgroundColor: slot.color,
+      opacity: slot.status === 'booked' ? 0.6 : 1,
+      pointerEvents: slot.status === 'booked' ? 'none' : 'auto',
+      borderRadius: '0.25rem',
+      border: 'none',
+      color: 'white'
+    }
+    return { style }
+  }
+
 
   return (
     <div className="h-screen p-4">
@@ -33,16 +50,21 @@ export function Calendar({ slots, onSelectSlot }: CalendarProps) {
         timeslots={1}
         min={new Date(0, 0, 0, 9, 0)}
         max={new Date(0, 0, 0, 17, 0)}
+        date={currentDate}
+        onNavigate={(date) => setCurrentDate(date)}
+        toolbar
         style={{ height: '100%' }}
         selectable
         onSelectEvent={(event: MyEvent) => {
-          if (!onSelectSlot) return
-            const slot = slots.find((s) => s.id === event.id)
-          if (slot) {
+          const slot: CalendarSlot = event.resource
+          console.log('Selected event:', event);          
+          if (slot.status === 'available' && onSelectSlot) {
+            console.log('Selected slot:', slot);
+            
             onSelectSlot(slot)
           }
         }}
-        toolbar={false}
+        eventPropGetter={eventStyleGetter}
       />
     </div>
   )
