@@ -1,7 +1,7 @@
 import { CSSProperties, useState } from 'react'
-import { Calendar as RbcCalendar, dateFnsLocalizer, Event } from 'react-big-calendar'
+import { Calendar as RbcCalendar, dateFnsLocalizer } from 'react-big-calendar'
 import { format, parse, startOfWeek, getDay } from 'date-fns'
-import { enUS } from 'date-fns/locale/en-US'
+import { enUS } from 'date-fns/locale'
 import { CalendarSlot, MyEvent } from '../models/types'
 
 
@@ -14,7 +14,6 @@ type CalendarProps = {
 }
 
 export function Calendar({ slots, onSelectSlot }: CalendarProps) {
-  //console.log('Calendar received slots', slots);
   const [currentDate, setCurrentDate] = useState<Date>(new Date())
 
   const events: MyEvent[] = slots.map(s => ({
@@ -27,7 +26,7 @@ export function Calendar({ slots, onSelectSlot }: CalendarProps) {
 
   const eventStyleGetter = (event: any) => {
     const slot: CalendarSlot = event.resource
-    const style: CSSProperties ={
+    const style: CSSProperties = {
       backgroundColor: slot.color,
       opacity: slot.status === 'booked' ? 0.6 : 1,
       pointerEvents: slot.status === 'booked' ? 'none' : 'auto',
@@ -57,10 +56,7 @@ export function Calendar({ slots, onSelectSlot }: CalendarProps) {
         selectable
         onSelectEvent={(event: MyEvent) => {
           const slot: CalendarSlot = event.resource
-          console.log('Selected event:', event);          
           if (slot.status === 'available' && onSelectSlot) {
-            console.log('Selected slot:', slot);
-            
             onSelectSlot(slot)
           }
         }}
