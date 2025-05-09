@@ -1,5 +1,19 @@
-// jest-dom adds custom jest matchers for asserting on DOM nodes.
-// allows you to do things like:
-// expect(element).toHaveTextContent(/react/i)
-// learn more: https://github.com/testing-library/jest-dom
-import '@testing-library/jest-dom';
+// src/setupTests.ts
+
+// 1) Pull in both client and legacy APIs
+import * as ReactDOM from 'react-dom'
+import * as ReactDOMClient from 'react-dom/client'
+
+// 2) If ReactDOM.render is missing, forward it to createRoot
+if (!(ReactDOM as any).render) {
+  const { createRoot } = ReactDOMClient
+  ;(ReactDOM as any).render = (element: any, container: HTMLElement, callback?: () => void) => {
+    // createRoot wants exactly one call per container
+    const root = createRoot(container)
+    root.render(element)
+    if(typeof callback === 'function') {
+      callback()
+    }
+    return root
+  }
+}

@@ -1,51 +1,86 @@
 [
   {
     "id": "e1",
-    "firstName": "Bob",
-    "lastName": "Johnson",
-    "email": "bob.johnson@example.com",
+    "firstName": "Alice",
+    "lastName": "Wong",
+    "email": "alice.wong@example.com",
     "timezone": "America/Vancouver",
     "color": "#3B82F6",
     "availability": [
       {
-        "id": "e1‑avail‑1",
-        "start": "2025-05-09T09:00:00-07:00",
-        "end":   "2025-05-09T17:00:00-07:00"
+        "id": "e1-avail-1",
+        "start": "2025-05-12T09:00:00-07:00",
+        "end":   "2025-05-12T12:00:00-07:00"
+      },
+      {
+        "id": "e1-avail-2",
+        "start": "2025-05-14T13:00:00-07:00",
+        "end":   "2025-05-14T17:00:00-07:00"
       }
     ]
   },
   {
     "id": "e2",
-    "firstName": "Carol",
-    "lastName": "Nguyen",
-    "email": "carol.nguyen@example.com",
+    "firstName": "Brian",
+    "lastName": "Chen",
+    "email": "brian.chen@example.com",
     "timezone": "America/Vancouver",
     "color": "#10B981",
     "availability": [
       {
-        "id": "e2‑avail‑1",
-        "start": "2025-05-09T09:00:00-07:00",
-        "end":   "2025-05-09T17:00:00-07:00"
+        "id": "e2-avail-1",
+        "start": "2025-05-13T10:00:00-07:00",
+        "end":   "2025-05-13T15:00:00-07:00"
+      },
+      {
+        "id": "e2-avail-2",
+        "start": "2025-05-15T09:00:00-07:00",
+        "end":   "2025-05-15T11:00:00-07:00"
+      },
+      {
+        "id": "e2-avail-3",
+        "start": "2025-05-12T16:00:00-07:00",
+        "end":   "2025-05-12T17:00:00-07:00"
       }
     ]
   },
   {
     "id": "e3",
-    "firstName": "Hailey",
-    "lastName": "Hong",
-    "email": "hailey.hong@example.com",
+    "firstName": "Carla",
+    "lastName": "Patel",
+    "email": "carla.patel@example.com",
     "timezone": "America/Vancouver",
-    "color": "#FBBF24",
+    "color": "#F59E0B",
     "availability": [
       {
-        "id": "e3‑avail‑1",
-        "start": "2025-05-09T09:00:00-07:00",
-        "end":   "2025-05-09T17:00:00-07:00"
+        "id": "e3-avail-1",
+        "start": "2025-05-12T14:00:00-07:00",
+        "end":   "2025-05-12T17:00:00-07:00"
       },
       {
-        "id": "e3‑avail‑2",
-        "start": "2025-05-08T09:00:00-07:00",
-        "end":   "2025-05-08T17:00:00-07:00"
+        "id": "e3-avail-2",
+        "start": "2025-05-16T09:00:00-07:00",
+        "end":   "2025-05-16T12:00:00-07:00"
+      }
+    ]
+  },
+  {
+    "id": "e4",
+    "firstName": "Daniel",
+    "lastName": "Kim",
+    "email": "daniel.kim@example.com",
+    "timezone": "America/Vancouver",
+    "color": "#E11D48",
+    "availability": [
+      {
+        "id": "e4-avail-1",
+        "start": "2025-05-12T09:00:00-07:00",
+        "end":   "2025-05-12T12:00:00-07:00"
+      },
+      {
+        "id": "e4-avail-2",
+        "start": "2025-05-14T13:00:00-07:00",
+        "end":   "2025-05-14T17:00:00-07:00"
       }
     ]
   }

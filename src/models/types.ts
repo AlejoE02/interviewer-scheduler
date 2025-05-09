@@ -42,6 +42,12 @@ export interface CalendarSlot {
   start:  Date;
   end:    Date;
   title?: string;
+  engineerId: string;
+  engineerName?: string;
+  color: string;
+  candidateId?: string;
+  candidateName?: string;
+  status?: 'available' | 'booked';
 }
 
 export interface MyEvent {
@@ -49,4 +55,5 @@ export interface MyEvent {
   start: Date
   end: Date
   title: string
+  resource: CalendarSlot
 }
