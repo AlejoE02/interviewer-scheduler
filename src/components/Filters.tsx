@@ -27,8 +27,9 @@ export const Filters: React.FC<FiltersProps> = ({
   return (
     <div className="p-4 flex flex-wrap gap-4 items-end bg-white shadow">
       <div>
-        <label className="block text-sm font-medium">Filter by</label>
+        <label htmlFor='filter' className="block text-sm font-medium">Filter by</label>
         <select
+          id='filter'
           className="mt-1 block rounded border-gray-300"
           value={filterType}
           onChange={(e) => onFilterTypeChange(e.target.value as FilterType)}
@@ -41,8 +42,9 @@ export const Filters: React.FC<FiltersProps> = ({
 
       {filterType === 'candidate' && (
         <div>
-          <label className="block text-sm font-medium">Candidate</label>
+          <label htmlFor='candidate' className="block text-sm font-medium">Candidate</label>
           <select
+            id='candidate'
             className="mt-1 block rounded border-gray-300"
             value={filterId}
             onChange={(e) => onFilterIdChange(e.target.value)}
@@ -59,8 +61,9 @@ export const Filters: React.FC<FiltersProps> = ({
 
       {filterType === 'engineer' && (
         <div>
-          <label className="block text-sm font-medium">Engineer</label>
+          <label htmlFor='engineer' className="block text-sm font-medium">Engineer</label>
           <select
+            id='engineer'
             className="mt-1 block rounded border-gray-300"
             value={filterId}
             onChange={(e) => onFilterIdChange(e.target.value)}
@@ -76,8 +79,9 @@ export const Filters: React.FC<FiltersProps> = ({
       )}
 
       <div>
-        <label className="block text-sm font-medium">Duration</label>
+        <label htmlFor='duration' className="block text-sm font-medium">Duration</label>
         <select
+          id='duration'
           className="mt-1 block rounded border-gray-300"
           value={duration}
           onChange={(e) => onDurationChange(Number(e.target.value))}

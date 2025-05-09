@@ -8,16 +8,20 @@ import type { Candidate, Engineer } from './models/types'
 const mockCandidates: Candidate[] = [
   {
     id: 'c1', firstName: 'Alice', lastName: 'Smith', email: 'alice@example.com',
-    availability: [ { id: 'c1-1', start: '2025-05-12T09:00:00-07:00', end: '2025-05-12T12:00:00-07:00' } ]
+    availability: [{ id: 'c1-1', start: '2025-05-12T09:00:00-07:00', end: '2025-05-12T12:00:00-07:00' }]
   }
 ]
 const mockEngineers: Engineer[] = [
   {
     id: 'e1', firstName: 'Bob', lastName: 'Johnson', email: 'bob@example.com',
     timezone: 'America/Vancouver', color: '#3B82F6',
-    availability: [ { id: 'e1-1', start: '2025-05-12T09:00:00-07:00', end: '2025-05-12T10:00:00-07:00' } ]
+    availability: [{ id: 'e1-1', start: '2025-05-12T09:00:00-07:00', end: '2025-05-12T10:00:00-07:00' }]
   }
 ]
+
+jest.mock('date-fns/locale', () => ({
+  enUS: {},
+}));
 
 describe('<App />', () => {
   beforeEach(() => {
@@ -34,9 +38,10 @@ describe('<App />', () => {
     expect(screen.getByText(/Loading…/i)).toBeInTheDocument()
     // Wait for loading to finish
     await waitFor(() => expect(screen.queryByText(/Loading…/i)).not.toBeInTheDocument())
-    // Filter controls should appear
-    expect(screen.getByLabelText(/Filter by/i)).toBeInTheDocument()
-    expect(screen.getByLabelText(/Duration/i)).toBeInTheDocument()
+    // eslint-disable-next-line testing-library/prefer-find-by
+    await waitFor(() => expect(screen.getByLabelText(/Filter by/i)).toBeInTheDocument())
+    // eslint-disable-next-line testing-library/prefer-find-by
+    await waitFor(() => expect(screen.getByLabelText(/Duration/i)).toBeInTheDocument());
   })
 
   it('shows candidate dropdown when filter type is candidate', async () => {
