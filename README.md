@@ -37,3 +37,8 @@ By default, engineer and candidate data are stored as static JSON files in `publ
 You can update these files at any time to change which slots appear on the calendar.
 
 > **Note:** The sample data is set to display slots during the week of **May 12 – 18, 2025**. If you run the app after that week, edit the dates in the JSON files so your events fall within the current calendar view.
+
+## Video
+
+The video explanation of the code
+- **Location:** `public/video/`
