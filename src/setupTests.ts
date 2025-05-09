@@ -1,10 +1,7 @@
-// src/setupTests.ts
-
-// 1) Pull in both client and legacy APIs
 import * as ReactDOM from 'react-dom'
 import * as ReactDOMClient from 'react-dom/client'
+import '@testing-library/jest-dom'
 
-// 2) If ReactDOM.render is missing, forward it to createRoot
 if (!(ReactDOM as any).render) {
   const { createRoot } = ReactDOMClient
   ;(ReactDOM as any).render = (element: any, container: HTMLElement, callback?: () => void) => {

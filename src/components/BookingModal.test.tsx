@@ -76,7 +76,6 @@ describe('BookingModal', () => {
     const candidateSelect = screen.getByLabelText('Candidate') as HTMLSelectElement
     const engineerSelect = screen.getByLabelText('Engineer') as HTMLSelectElement
 
-    // change selects to non-default values
     fireEvent.change(candidateSelect, { target: { value: candidates[1].id } })
     fireEvent.change(engineerSelect, { target: { value: engineers[1].id } })
 
